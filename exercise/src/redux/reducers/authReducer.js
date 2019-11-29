@@ -12,6 +12,7 @@ let initState = {
 export default (state = initState, action) => {
     switch (action.type) {
         case actions.USER_LOGIN:
+            console.log("USER_LOGIN: Reducer")
             return {
                 ...state,
                 isUserLogged: action.data

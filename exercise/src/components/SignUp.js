@@ -19,7 +19,7 @@ function SignUp({ setUserData, history, error }) {
 
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
-    const [sending, setSending] = useState('')
+    const [sending, setSending] = useState(false)
 
     const signUpUser = () => {
         let userData = {

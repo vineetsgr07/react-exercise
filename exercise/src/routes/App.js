@@ -20,8 +20,8 @@ class App extends Component {
                 <div className="App">
                     <TopBar />
                     <div className="main center">
-                        <Route exact path="/"  render={() => <Landing />} />
-                        <Route path="/home" render={() => <Home />}   />
+                        <Route exact path="/" component={Landing} />
+                        <Route path="/home" component={Home} />
                         <Route path="/sign-up" component={SignUp} />
                         <PrivateRoute
                             path="/user-list"

@@ -1,14 +1,13 @@
 import AuthService from '../../services/auth.js'
 
-
 export const USER_LOGIN = 'USER_LOGIN';
 const logIn = () => {
+    console.log("USER_LOGIN: Action")
     return {
         type: USER_LOGIN,
         data: true
     };
 }
-
 
 export const USER_LOGOUT = 'USER_LOGOUT';
 const logOut = () => {
@@ -18,7 +17,6 @@ const logOut = () => {
     };
 }
 
-
 export const SET_USER_DATA = "SET_USER_DATA";
 const setUser = (payload) => {
     return {
@@ -27,12 +25,10 @@ const setUser = (payload) => {
     };
 }
 
-
 export const CLEAR_USER_DATA = "CLEAR_USER_DATA";
 const clearUser = () => {
     return { type: CLEAR_USER_DATA };
 }
-
 
 export const SET_ERROR_MSG = "SET_ERROR_MSG";
 const setErrMsg = (payload) => {
@@ -42,12 +38,10 @@ const setErrMsg = (payload) => {
     }
 }
 
-
 export const CLEAR_ERROR_MSG = "CLEAR_ERROR_MSG";
 export const clearErrMsg = () => {
     return { type: CLEAR_ERROR_MSG };
 }
-
 
 export const logOutUser = () => {
     return dispatch => {
@@ -55,7 +49,6 @@ export const logOutUser = () => {
         dispatch(clearUser());
     }
 }
-
 
 export const signUpUser = (userData) => {
     return dispatch => {
@@ -67,12 +60,10 @@ export const signUpUser = (userData) => {
     }
 }
 
-
 export const LOAD_USERS_SUCCESS = 'LOAD_USERS_SUCCESS';
 export const loadUserListSuccess = (users) => {
     return { type: LOAD_USERS_SUCCESS, users };
 }
-
 
 export const loadUserList = () => {
     return dispatch => {
@@ -94,7 +85,6 @@ export const loadUserList = () => {
             });
     }
 }
-
 
 export const logInUser = () => {
     return dispatch => {

@@ -22,7 +22,10 @@ const screen = {
 function Home({ userLogIn, clearMsg, isUserLogged, error }) {
 
   useEffect(() => {
-    clearMsg()
+    return () => {
+      clearMsg()
+      console.log("cleaned up");
+    };
   }, [])
 
   return (
