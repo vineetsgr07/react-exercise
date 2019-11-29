@@ -1,12 +1,10 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Card } from "react-bootstrap";
 
 import { logInUser, logOutUser, clearErrMsg } from "../redux/actions/actions";
-
 import { Button } from "react-bootstrap"
-
 import WelcomeScreen from "./Welcome";
 
 const center = {
@@ -21,41 +19,36 @@ const screen = {
   height: window.innerHeight / 2,
 }
 
-class Home extends Component {
-  componentWillUnmount() {
-    this.props.clearMsg();
-  }
+function Home({ userLogIn, clearMsg, isUserLogged, error }) {
 
-  render() {
-    return (
-      <div className="container-fluid">
-        <div className="col-xs-12 col-lg-12">
-          <div className="grey-panel flex-colum">
-            {
-              !this.props.isUserLogged ? (
-                <div style={{ ...center, ...screen }}>
-                  <Card style={{ width: '18rem' }}>
-                    <Card.Body>
-                      <Card.Title style={center}>User Portal</Card.Title>
-                      <Card.Text style={center}>
-                        <Button onClick={this.props.userLogIn} >LogIn</Button>
-                      </Card.Text>
-                      <Card.Subtitle className="mb-2 text-muted" style={center}>
-                        {this.props.error && (<p className="error">{this.props.error}</p>)}
-                      </Card.Subtitle>
-                    </Card.Body>
-                  </Card>
-                </div>)
-                : (
-                  <div>
-                    <WelcomeScreen />
-                  </div>
-                )}
-          </div>
-        </div>
-      </div >
-    );
-  }
+  useEffect(() => {
+    clearMsg()
+  }, [])
+
+  return (
+    <React.Fragment>
+      {
+        !isUserLogged ? (
+          <div style={{ ...center, ...screen }}>
+            <Card style={{ width: '18rem' }}>
+              <Card.Body>
+                <Card.Title style={center}>User Portal</Card.Title>
+                <Card.Text style={center}>
+                  <Button onClick={userLogIn} >LogIn</Button>
+                </Card.Text>
+                <Card.Subtitle className="mb-2 text-muted" style={center}>
+                  {error && (<p className="error">{error}</p>)}
+                </Card.Subtitle>
+              </Card.Body>
+            </Card>
+          </div>)
+          : (
+            <div>
+              <WelcomeScreen />
+            </div>
+          )}
+    </React.Fragment >
+  );
 }
 
 Home.propTypes = {

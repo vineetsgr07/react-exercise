@@ -3,14 +3,16 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { Breadcrumb } from 'react-bootstrap'
 
-const Breadcrumbs = props => {
+const Breadcrumbs = ({ pages }) => {
   return (
-    <Breadcrumb>
-      {props.pages.map((elem, index) =>
-        <Breadcrumb.Item key={index}>
-          <Link to={elem.path}>{elem.label}</Link>
-        </Breadcrumb.Item>)}
-    </Breadcrumb>
+    <React.Fragment>
+      <Breadcrumb>
+        {pages.map(({ path, label }, index) =>
+          <Breadcrumb.Item key={index}>
+            <Link to={path}>{label}</Link>
+          </Breadcrumb.Item>)}
+      </Breadcrumb>
+    </React.Fragment>
   );
 };
 

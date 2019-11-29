@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from "prop-types";
 import { Button } from 'react-bootstrap'
 import { connect } from 'react-redux';
@@ -15,102 +15,78 @@ const verticalAlign = {
     height: window.innerHeight / 2
 }
 
-class SignUp extends React.Component {
-    constructor(props) {
-        super(props);
+function SignUp({ setUserData, history, error }) {
 
-        this.state = {
-            firstName: '',
-            lastName: '',
-            sending: false
-        };
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
+    const [sending, setSending] = useState('')
 
-        this.signUpUser = this.signUpUser.bind(this);
-        this.handleFormChange = this.handleFormChange.bind(this);
-        this.handleCommunicationState = this.handleCommunicationState.bind(this);
-    }
-
-    signUpUser() {
+    const signUpUser = () => {
         let userData = {
-            firstName: this.state.firstName,
-            lastName: this.state.lastName,
+            firstName: firstName,
+            lastName: lastName
         }
 
-        if (!this.state.sending) {
-            this.handleCommunicationState(true);
-
-            this.props.setUserData(userData)
+        if (!sending) {
+            setSending(true);
+            setUserData(userData)
                 .then(() => {
-                    this.handleCommunicationState(false);
-                    !this.props.error && this.props.history.push('/home');
+                    setSending(false);
+                    !error && history.push('/home');
                 });
         }
     }
 
-    handleFormChange(event) {
-        this.setState({
-            [event.target.name]: event.target.value
-        });
-    }
-
-    handleCommunicationState(bool) {
-        this.setState({
-            sending: bool
-        });
-    }
-
-    formAction(e) {
+    const formAction = (e) => {
         e.preventDefault()
     }
 
-    render() {
-        return (
-            <div style={{ ...center, ...verticalAlign }}>
-                <Card style={{ width: '18rem' }}>
-                    <Card.Body>
-                        <Card.Title style={center} >Please Sign Up!</Card.Title>
-                        <Card.Text>
-                            <form
-                                onSubmit={this.formAction}
-                            >
-                                <div className="form-group">
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        placeholder="first name"
-                                        name="firstName"
-                                        value={this.state.firstName}
-                                        onChange={this.handleFormChange} 
-                                        autoComplete="off"/>
-                                </div>
-                                <div className="form-group">
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        placeholder="last name"
-                                        name="lastName"
-                                        autoComplete="off"
-                                        value={this.state.lastName}
-                                        onChange={this.handleFormChange} />
-                                </div>
-                                {
-                                    this.props.error
-                                    && (<span className="error">{this.props.error}</span>)
-                                }
-                                <div style={center}>
-                                    <Button
-                                        onClick={this.signUpUser}
-                                        propClass='btn btn-primary'>
-                                        SignUp
+    return (
+        <div style={{ ...center, ...verticalAlign }}>
+            <Card style={{ width: '18rem' }}>
+                <Card.Body>
+                    <Card.Title style={center} >Please Sign Up!</Card.Title>
+                    <Card.Text>
+                        <form
+                            onSubmit={formAction}
+                        >
+                            <div className="form-group">
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="first name"
+                                    name="firstName"
+                                    value={firstName}
+                                    onChange={(e) => setFirstName(e.target.value)}
+                                    autoComplete="off" />
+                            </div>
+                            <div className="form-group">
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="last name"
+                                    name="lastName"
+                                    autoComplete="off"
+                                    value={lastName}
+                                    onChange={(e) => setLastName(e.target.value)} />
+                            </div>
+                            {
+                                error
+                                && (<span className="error">{error}</span>)
+                            }
+                            <div style={center}>
+                                <Button
+                                    onClick={signUpUser}
+                                    propClass='btn btn-primary'>
+                                    SignUp
                                     </Button>
-                                </div>
-                            </form>
-                        </Card.Text>
-                    </Card.Body>
-                </Card>
-            </div>
-        )
-    }
+                            </div>
+                        </form>
+                    </Card.Text>
+                </Card.Body>
+            </Card>
+        </div>
+    )
 }
 
 SignUp.propTypes = {

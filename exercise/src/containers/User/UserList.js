@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
@@ -7,59 +7,52 @@ import Breadcrumb from '../../components/Breadcrumb';
 import { loadUserList } from '../../redux/actions/actions';
 import { Table } from 'react-bootstrap';
 
-class UserList extends Component {
-  constructor(props) {
-    super(props);
+function UserList({ loadUserList, history, users }) {
 
-    this.goToUserDetails = this.goToUserDetails.bind(this);
-  }
+  useEffect(() => {
+    loadUserList();
+  },[]);
 
-  componentDidMount() {
-    this.props.loadUserList();
-  }
-
-  goToUserDetails(name) {
+  const goToUserDetails = (name) => {
     let encodedUserName = encodeURI(name);
-    this.props.history.push(`/user-details/${encodedUserName}`);
+    history.push(`/user-details/${encodedUserName}`);
   }
 
-  render() {
-    let pages = [{
-      path: "/home",
-      label: "Home"
-    }, {
-      path: "/user-list",
-      label: "User List"
-    }];
+  let pages = [{
+    path: "/home",
+    label: "Home"
+  }, {
+    path: "/user-list",
+    label: "User List"
+  }];
 
-    return (
-      <React.Fragment>
-        <Breadcrumb pages={pages} />
-        <Table striped bordered hover >
-          <thead>
-            <tr>
-              <th scope="col">Title</th>
-              <th scope="col">Name</th>
-              <th scope="col">Email</th>
-              <th scope="col">Phone</th>
-              <th scope="col">Country</th>
+  return (
+    <React.Fragment>
+      <Breadcrumb pages={pages} />
+      <Table striped bordered hover >
+        <thead>
+          <tr>
+            <th scope="col">Title</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Country</th>
+          </tr>
+        </thead>
+        <tbody>
+          {users && users.map(({ login, name, email, location }, index) =>
+            <tr key={index} style={pointer} onClick={() => goToUserDetails(login.username)}>
+              <td className="capital">{name.title}.</td>
+              <td className="capital">{`${name.first} ${name.last}`}</td>
+              <td className="capital">{name.Phone}</td>
+              <td>{email}</td>
+              <td>{location.country}</td>
             </tr>
-          </thead>
-          <tbody>
-            {this.props.users.map((user, index) =>
-              <tr style={pointer} onClick={() => this.goToUserDetails(user.login.username)}>
-                <td className="capital">{user.name.title}.</td>
-                <td className="capital">{`${user.name.first} ${user.name.last}`}</td>
-                <td className="capital">{user.name.last}</td>
-                <td>{user.email}</td>
-                <td>{user.location.country}</td>
-              </tr>
-            )}
-          </tbody>
-        </Table>
-      </React.Fragment>
-    );
-  }
+          )}
+        </tbody>
+      </Table>
+    </React.Fragment>
+  );
 }
 
 UserList.propTypes = {

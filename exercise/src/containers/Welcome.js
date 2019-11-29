@@ -1,11 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-
-
 const LandingPage = () => {
     return (
-        <div>
+        <React.Fragment>
             <h1 style={{
                 display: 'flex',
                 justifyContent: 'center',
@@ -19,8 +17,7 @@ const LandingPage = () => {
             }}>
                 <Link to="/user-list" className="btn btn-info">User List</Link>
             </div>
-
-        </div>
+        </React.Fragment>
     )
 }
 

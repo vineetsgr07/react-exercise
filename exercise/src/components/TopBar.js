@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
@@ -7,46 +7,37 @@ import { logInUser, logOutUser } from '../redux/actions/actions'
 import { Link } from 'react-router-dom';
 import { Button } from "react-bootstrap";
 
-class TopBar extends Component {
+function TopBar({ userData, isUserLogged, userLogOut, userLogIn }) {
 
-  render() {
-    return (
-      <header style={header}>
-        <div style={logo}>
-          <Link to="/">
-            <img alt={'logo'} style={logoImage} src="favicon-196x196.png" />
-          </Link>
-        </div>
-        <div>{'Modus Create'}</div>
-        <div style={logoText} />
-        {
-          this.props.isUserLogged ?
-            (
-              <div style={{
-                float: '',
-                paddingRight: 10,
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-                <div style={avatarCircle}>
-                  <span style={initials}>
-                    {` ${this.props.userData.firstName.charAt(0)}${this.props.userData.lastName.charAt(0)} `}
-                  </span>
-                </div>
-                <Button variant="primary" onClick={this.props.userLogOut}> LogOut </Button>
+  return (
+    <header style={header}>
+      <div style={logo}>
+        <Link to="/">
+          <img alt={'logo'} style={logoImage} src="favicon-196x196.png" />
+        </Link>
+      </div>
+      <div>{'Modus Create'}</div>
+      <div style={logoText} />
+      {
+        isUserLogged ?
+          (
+            <div style={userAvatar}>
+              <div style={avatarCircle}>
+                <span style={initials}>
+                  {` ${userData.firstName.charAt(0)}${userData.lastName.charAt(0)} `}
+                </span>
               </div>
-            ) : (
-              <div style={loginBtn}>
-                <Button variant="primary" onClick={this.props.userLogIn}>LogIn</Button>
-                <Link to="/sign-up" style={ml8} className='btn btn-danger'>SignUp</Link>
-              </div>
-            )
-        }
-      </header>
-    );
-  }
+              <Button variant="primary" onClick={userLogOut}> LogOut </Button>
+            </div>
+          ) : (
+            <div style={loginBtn}>
+              <Button variant="primary" onClick={userLogIn}>LogIn</Button>
+              <Link to="/sign-up" style={ml8} className='btn btn-danger'>SignUp</Link>
+            </div>
+          )
+      }
+    </header>
+  );
 }
 
 TopBar.propTypes = {
@@ -72,6 +63,12 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
+export default connect(mapStateToProps, mapDispatchToProps)(TopBar);
+
+
+/**
+ * Styles
+ */
 const header = {
   height: 48,
   width: '100%',
@@ -104,5 +101,11 @@ const initials = {
   fontWeight: 'bold'
 }
 
-
-export default connect(mapStateToProps, mapDispatchToProps)(TopBar);
+const userAvatar = {
+  float: '',
+  paddingRight: 10,
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'center',
+  alignItems: 'center',
+}
