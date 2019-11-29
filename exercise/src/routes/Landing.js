@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 export default class Landing extends Component {
   render() {
     return (
-      <div style={{padding: 10}}>
+      <div style={{ padding: 10 }}>
         <h1>First Task</h1>
         <p>
           {'The '}
@@ -21,8 +21,8 @@ export default class Landing extends Component {
           {'either should revert you to logged out state. '}
           {'The TopBar Login button should change to YOUR initials (see example below) and the Signup button should change to Logout'}
         </p>
-        <div style={{textAlign: 'center'}}>
-          <img alt={'initials'} style={{maxHeight: 44}}src="topbar-example.png"/>
+        <div style={{ textAlign: 'center' }}>
+          <img alt={'initials'} style={{ maxHeight: 44 }} src="topbar-example.png" />
         </div>
         <h1>Second Task</h1>
         <p>
